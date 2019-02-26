@@ -1,0 +1,5 @@
+[{"ID":"0","SlugName":"Russia" ,"Population":"146793744","Area": "17125191","GDP":"4323","Model":"Kremlin"},
+{"ID":"1","SlugName":"France","Population":"66991000","Area": "674685","GDP": "2739","Model":"Eiffel Tower"},
+{"ID":"2","SlugName":"GreatBritain","Population":"63395574","Area": "243809","GDP": "2247","Model":"Tower Bridge"}
+
+]
