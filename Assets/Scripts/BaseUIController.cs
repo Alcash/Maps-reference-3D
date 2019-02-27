@@ -5,9 +5,11 @@ using UnityEngine;
 public class BaseUIController : MonoBehaviour
 {
 
-    public virtual void Init()
+    float _AnimationTime = 0.3f;
+    protected SceneManager _SceneManager;
+    public virtual void Init(SceneManager sceneManager)
     {
-
+        _SceneManager = sceneManager;
     }
 
     public virtual void Open(bool instantly = false)
@@ -16,13 +18,23 @@ public class BaseUIController : MonoBehaviour
             gameObject.SetActive(true);
         else
         {
+            gameObject.SetActive(true);
             StartCoroutine(Opening());
         }
     }
 
     protected virtual IEnumerator Opening()
     {
-        gameObject.SetActive(true);
+
+        float time = _AnimationTime;
+
+        while(time > 0)
+        {
+            transform.localScale = Vector3.one * ( 1 - (time / _AnimationTime));
+            time -= Time.deltaTime;
+            yield return null;
+        }
+
         yield return null;
        
     }
@@ -39,7 +51,14 @@ public class BaseUIController : MonoBehaviour
 
     protected virtual IEnumerator Closing()
     {
-        gameObject.SetActive(false);
+        float time = _AnimationTime;
+
+        while (time > 0)
+        {
+            transform.localScale = Vector3.one * (1 - (time / _AnimationTime));
+            time -= Time.deltaTime;
+            yield return null;
+        }
         yield return null;
 
     }

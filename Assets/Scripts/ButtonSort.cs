@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ButtonSort : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    Image _Image;
+
+    private void Start()
     {
-        
+        _Image = transform.GetChild(1).GetComponent<Image>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ArrowUp(bool value)
     {
-        
+        float rotZ = value ? 0 : 180;
+        _Image.transform.rotation = Quaternion.Euler(0, 0, rotZ);
     }
+
 }

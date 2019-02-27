@@ -16,21 +16,26 @@ public class DataManager : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-
-        DictionaryCountryDatabase = LoadDatabaseBySlugName("CountryDatabase");
-
         
+        DictionaryCountryDatabase = LoadDatabaseBySlugName("CountryDatabase");
+       
+
     }    
 
     public Dictionary<string,string> GetCountryInfo(string slugName)
     {
+        Dictionary<string, string> result = new Dictionary<string, string>();
 
-        string jsonData = DictionaryCountryDatabase[slugName].ToJson();
+        Debug.Log("DictionaryCountryDatabase " + DictionaryCountryDatabase.Count);
+        if (DictionaryCountryDatabase.ContainsKey(slugName))
+        {
+            string jsonData = DictionaryCountryDatabase[slugName].ToJson();
 
-        Debug.Log(jsonData);
+            Debug.Log(jsonData);
 
-        Dictionary<string, string> result = JsonMapper.ToObject<Dictionary<string, string>>(jsonData);
-
+            result = JsonMapper.ToObject<Dictionary<string, string>>(jsonData);
+        }
+       
         return result;
     }
 
@@ -47,11 +52,13 @@ public class DataManager : MonoBehaviour
 
         if (JsonText.GetJsonType() != JsonType.Array)
         {
+            Debug.LogError(name + " JsonType not Array");
             return null;
         }
 
         if (JsonText.Count == 0)
         {
+            Debug.LogError(name + " JsonText.Count == 0");
             return null;
         }
 
@@ -59,7 +66,7 @@ public class DataManager : MonoBehaviour
         {            
             result.Add(JsonText[i]["SlugName"].ToString(), JsonText[i]);
         }
-        
+        Debug.LogError(JsonText.Count + " add item");
         return result;
     }
 

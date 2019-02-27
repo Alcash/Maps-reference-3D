@@ -3,27 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainUIController : MonoBehaviour
+public class MainUIController : BaseUIController
 {
 
     public Button m_ClearListCountryButton;
-    public Button m_ShowListCountyButton;   
+    public Button m_ShowListCountyButton;
 
 
-    public void Init()
+    public override void Init(SceneManager sceneManager)
     {
+        base.Init(sceneManager);
+
         m_ClearListCountryButton.onClick.AddListener(ClearListCountryButtonClicked);
         m_ShowListCountyButton.onClick.AddListener(ShowListCountyButtonClicked);
     }
 
-    void ClearListCountryButtonClicked()
+
+    public void SetActiveClearButton(bool value)
     {
 
+        m_ClearListCountryButton.gameObject.SetActive(value);
+    }
+
+    void ClearListCountryButtonClicked()
+    {
+        _SceneManager.ClearListContry();
     }
 
     void ShowListCountyButtonClicked()
     {
-
+        _SceneManager.ShowListCountry();
     }
 
 }

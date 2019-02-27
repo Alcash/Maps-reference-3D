@@ -6,17 +6,18 @@ using UnityEngine.UI;
 public class CountryInfoUIController : BaseUIController
 {
 
-    public Text m_AreaText, m_GRPText, m_PopulationText;
+    public Text m_AreaText, m_GRPText, m_PopulationText, m_NameText;
 
-    public override void Init()
+    public override void Init(SceneManager sceneManager)
     {
-        base.Init();
+        base.Init(sceneManager);
 
-        Close();
-    }
+        Close(true);
+    }    
 
     public void Open(Country_SO country)
     {
+        
         m_AreaText.text = "Площадь: " + country.GetArea();
         m_GRPText.text = "ВВП: " + country.GetGDP();
         m_PopulationText.text = "Население: " + country.GetPopulation();
@@ -24,5 +25,5 @@ public class CountryInfoUIController : BaseUIController
         base.Open(true);
     }
 
-    
+   
 }

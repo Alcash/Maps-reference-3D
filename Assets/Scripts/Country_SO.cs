@@ -1,54 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-[CreateAssetMenu(fileName = "country", menuName = "CountrySO/Unit", order = 1)]
-public class Country_SO : ScriptableObject
+public class Country_SO
 {
-    [SerializeField]
-    string slugName = "default";
-    [SerializeField]
-    int area = 0;
-    [SerializeField]
-    int population = 0;
-    [SerializeField]
-    int gdp = 0;
-    [SerializeField]
-    string model = "";
+    
+    string _SlugName = "default";
+    string _Name = "";
+    int _Area = 0;    
+    int _Population = 0;    
+    int _GDP = 0;    
+    string _Model = "";
 
-    public void Init()
+    public Country_SO(string slugName)
     {
-        var info = DataManager.instance.GetCountryInfo(slugName);
-
-        area = int.Parse(info["Area"]);
-        population = int.Parse(info["Population"]);
-        gdp = int.Parse(info["GDP"]);
-        model = info["Model"];
+        _SlugName = slugName;
+        Dictionary<string,string> info = DataManager.instance.GetCountryInfo(_SlugName);
+        if (info.Count > 0)
+        {
+            _Name = info["NameCountry"];
+            _Area = int.Parse(info["Area"]);
+            _Population = int.Parse(info["Population"]);
+            _GDP = int.Parse(info["GDP"]);
+            _Model = info["Model"];
+        }
     }
+
 
     public string GetName()
     {
-        return slugName;
+        return _Name;
     }
 
     public int GetArea()
     {
-        return area;
+        return _Area;
     }
 
     public int GetPopulation()
     {
-        return population;
+        return _Population;
     }
 
     public int GetGDP()
     {
-        return gdp;
+        return _GDP;
     }
 
     public GameObject LoadModel()
     {
-        GameObject result = Resources.Load<GameObject>("Models/" + model);
+        GameObject result = Resources.Load<GameObject>("Models/" + _Model);
         if (result == null)
             result = new GameObject();
         return result;
