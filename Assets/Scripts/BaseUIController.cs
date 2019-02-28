@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BaseUIController : MonoBehaviour
 {
 
     float _AnimationTime = 0.3f;
     protected SceneManager _SceneManager;
+    protected Animator _Animator;
+
+    protected UnityAction _OpenMethod;
+    protected UnityAction _CloseMethod;
+
     public virtual void Init(SceneManager sceneManager)
     {
         _SceneManager = sceneManager;
+        _OpenMethod = ScaleOpenMethod;
+        _CloseMethod = ScaleCloseMethod;
+         _Animator = GetComponent<Animator>();
     }
 
     public virtual void Open(bool instantly = false)
@@ -19,10 +28,14 @@ public class BaseUIController : MonoBehaviour
         else
         {
             gameObject.SetActive(true);
-            StartCoroutine(Opening());
+            _OpenMethod();
         }
     }
 
+    protected virtual void ScaleOpenMethod()
+    {
+        StartCoroutine(Opening());
+    }
     protected virtual IEnumerator Opening()
     {
 
@@ -45,8 +58,13 @@ public class BaseUIController : MonoBehaviour
             gameObject.SetActive(false);
         else
         {
-            StartCoroutine(Closing());
+            ScaleCloseMethod();
         }
+    }
+
+    protected virtual void ScaleCloseMethod()
+    {
+        StartCoroutine(Closing());
     }
 
     protected virtual IEnumerator Closing()
@@ -55,11 +73,11 @@ public class BaseUIController : MonoBehaviour
 
         while (time > 0)
         {
-            transform.localScale = Vector3.one * (1 - (time / _AnimationTime));
+            transform.localScale = Vector3.one * ((time / _AnimationTime));
             time -= Time.deltaTime;
             yield return null;
         }
         yield return null;
-
+        gameObject.SetActive(false);
     }
 }

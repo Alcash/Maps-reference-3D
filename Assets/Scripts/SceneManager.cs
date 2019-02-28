@@ -44,6 +44,8 @@ public class SceneManager : MonoBehaviour
 
         _SelectCountryUIController = m_Canvas.GetComponentInChildren<SelectCountryUIController>(true);
         _SelectCountryUIController.Init(this);
+
+        UpdateUI();
     }
 
     void ShowCountyInfo(Country_SO country)
@@ -55,14 +57,14 @@ public class SceneManager : MonoBehaviour
     {
         countrySelectedList.Add(country);
 
-        _MainUIController.SetActiveClearButton(countrySelectedList.Count > 0);
+        UpdateUI();
     }
 
     internal void RemoveCountry(Country_SO country)
     {
         countrySelectedList.Remove(country);
 
-        _MainUIController.SetActiveClearButton(countrySelectedList.Count > 0);
+        UpdateUI();
     }
 
     public List<Country_SO> GetCountries()
@@ -80,6 +82,13 @@ public class SceneManager : MonoBehaviour
 
 
         }
+        UpdateUI();
+    }
+
+    void UpdateUI()
+    {
+        _MainUIController.SetActiveClearButton(countrySelectedList.Count > 0);
+        _MainUIController.SetCountCountry(countrySelectedList.Count);
     }
 
     public void ShowListCountry()

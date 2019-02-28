@@ -25,13 +25,10 @@ public class DataManager : MonoBehaviour
     public Dictionary<string,string> GetCountryInfo(string slugName)
     {
         Dictionary<string, string> result = new Dictionary<string, string>();
-
-        Debug.Log("DictionaryCountryDatabase " + DictionaryCountryDatabase.Count);
+        
         if (DictionaryCountryDatabase.ContainsKey(slugName))
         {
-            string jsonData = DictionaryCountryDatabase[slugName].ToJson();
-
-            Debug.Log(jsonData);
+            string jsonData = DictionaryCountryDatabase[slugName].ToJson();            
 
             result = JsonMapper.ToObject<Dictionary<string, string>>(jsonData);
         }
@@ -66,7 +63,7 @@ public class DataManager : MonoBehaviour
         {            
             result.Add(JsonText[i]["SlugName"].ToString(), JsonText[i]);
         }
-        Debug.LogError(JsonText.Count + " add item");
+       
         return result;
     }
 

@@ -9,6 +9,9 @@ public class MainUIController : BaseUIController
     public Button m_ClearListCountryButton;
     public Button m_ShowListCountyButton;
 
+    [SerializeField]
+    Text _CountCountryText;
+    string labelCountCountry = "Выбрано: ";
 
     public override void Init(SceneManager sceneManager)
     {
@@ -16,8 +19,17 @@ public class MainUIController : BaseUIController
 
         m_ClearListCountryButton.onClick.AddListener(ClearListCountryButtonClicked);
         m_ShowListCountyButton.onClick.AddListener(ShowListCountyButtonClicked);
+
+        _CountCountryText.gameObject.SetActive(false);
     }
 
+    public void SetCountCountry(int value )
+    {
+
+        _CountCountryText.gameObject.SetActive(value > 0);
+
+        _CountCountryText.text = labelCountCountry + value;
+    }
 
     public void SetActiveClearButton(bool value)
     {

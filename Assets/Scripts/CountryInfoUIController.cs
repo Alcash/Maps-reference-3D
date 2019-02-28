@@ -13,6 +13,8 @@ public class CountryInfoUIController : BaseUIController
         base.Init(sceneManager);
 
         Close(true);
+
+        _OpenMethod = OpenLeftToRight;
     }    
 
     public void Open(Country_SO country)
@@ -22,8 +24,12 @@ public class CountryInfoUIController : BaseUIController
         m_GRPText.text = "ВВП: " + country.GetGDP();
         m_PopulationText.text = "Население: " + country.GetPopulation();
 
-        base.Open(true);
+        base.Open();
     }
 
-   
+    void OpenLeftToRight()
+    {
+        Debug.Log("OpenLeftToRight");
+        _Animator.SetTrigger("OpenLeftToRight");
+    }
 }
